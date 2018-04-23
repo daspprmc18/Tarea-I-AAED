@@ -10,9 +10,59 @@ using namespace std;
 
 class Ordenador {
 private:
-    void mergesort (int * arreglo, int posicionInicial, int posicionFinal);
-    void merge (int * arreglo, int posInicial, int posMedia, int posFinal);
 
+    void merge (int * arreglo, int posInicial, int posMedia, int posFinal) {
+
+        int tamSubIzq = posMedia - posInicial + 1; // La distancia entre el inicio y el punto medio, se le suma 1 porque el arreglo inicia en 0.
+        int tamSubDer = posFinal - posMedia; // La distancia entre el final y el punto medio.
+
+        int subIzq[tamSubIzq];
+        int subDer[tamSubDer];
+
+        // Copia los elementos desde A[posInicial..posMedia] en el subarreglo izquierdo.
+        for ( int i = 0; i < tamSubIzq; ++i )
+            subIzq[i] = arreglo[posInicial + i];
+
+        // Copia los elementos desde A[posMedia+1..posFinal] en el subarreglo derecho.
+        for ( int i = 0; i < tamSubDer; ++i )
+            subDer[i] = arreglo[posMedia + 1 + i]; // Dado que el arreglo está numerado de 0...n-1 hay que sumar 1 a la posicion media del arreglo completo
+        // para llegar al primer elemento del subarreglo derecho.
+
+        int i = 0; // Índice para moverse por el subarreglo izquierdo
+        int j = 0; // Índice para moverse por el subarreglo derecho.
+        int m = posInicial; // Índice para moverse por el arreglo a ordenar.
+
+        // Mientras no se alcance el final del subarreglo izquierdo y derecho.
+
+        while ( i < tamSubIzq && j < tamSubDer ) {
+
+            if ( subIzq[i] <= subDer[j] )
+                arreglo[m++] = subIzq[i++];
+            else
+                arreglo[m++] = subDer[j++];
+        }
+
+        // Aún puede haber elementos en alguno de los dos subarreglos, por ello hacemos la verificacion respectiva y copiamos los restantes.
+
+        while ( i < tamSubIzq ) // Si la condición se cumple aún quedan elementos en el subarreglo izquierdo.
+            arreglo[m++] = arreglo[i++];
+
+        if ( j < tamSubDer ) // Si la condición se cumple aún quedan elementos en el subarreglo derecho.
+            arreglo[m++] = arreglo[j++];
+    }
+
+    void mergesort (int * arreglo, int posInicial, int posFinal) {
+
+        int posMedia = 0;
+        if ( posInicial < posFinal ) {
+
+            posMedia = ( posInicial + posFinal ) / 2;
+
+            mergesort( arreglo, posInicial, posMedia );
+            mergesort( arreglo, posMedia + 1, posFinal );
+            merge( arreglo, posInicial, posMedia, posFinal ); // Mezcla A[posInicial..posMedia] y A[posMedia+1..posFinal]
+        }
+    }
 
 public:
 
@@ -94,37 +144,3 @@ public:
 };
 #endif
 
-void mergesort (int * arreglo, int posInicial, int posFinal) {
-
-    int posMedia = 0;
-    if ( posInicial < posFinal ) {
-
-        posMedia = ( posInicial + posFinal ) / 2;
-
-        mergesort( arreglo, posInicial, posMedia );
-        mergesort( arreglo, posMedia + 1, posFinal );
-        merge( arreglo, posInicial, posMedia, posFinal ); // Mezcla A[posInicial..posMedia] y A[posMedia+1..posFinal]
-    }
-}
-
-void merge (int * arreglo, int posInicial, int posMedia, int posFinal) {
-
-    int tamSubIzq = posMedia - posInicial + 1; // La distancia entre el inicio y el punto medio, se le suma 1 porque el arreglo inicia en 0.
-    int tamSubDer = posFinal - posMedia; // La distancia entre el final y el punto medio.
-
-    int subIzq[tamSubIzq];
-    int subDer[tamSubDer];
-
-    // Copia los elementos desde A[posInicial..posMedia] en el subarreglo izquierdo.
-    for ( int i = 0; i < tamSubIzq; ++i )
-        subIzq[i] = arreglo[posInicial + i];
-
-    // Copia los elementos desde A[posMedia+1..posFinal] en el subarreglo derecho.
-    for ( int i = 0; i < tamSubDer; ++i )
-        subDer[i] = arreglo[posMedia + 1 + i]; // Dado que el arreglo está numerado de 0...n-1 hay que sumar 1 a la posicion media del arreglo completo
-    // para llegar al primer elemento del subarreglo derecho.
-
-
-
-
-}

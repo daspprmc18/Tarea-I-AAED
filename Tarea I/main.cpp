@@ -25,7 +25,7 @@ int main(int argc, char** argv)
 {
     srand( time( NULL ) );
 
-    int tamano = 300000;
+    int tamano = 20;
     Ordenador ordenador;
 
     /*{ // Ordenamiento por selección.
@@ -36,13 +36,27 @@ int main(int argc, char** argv)
         delete[] arreglo;
     }*/
 
-    { // Ordenamiento por inserción.
+    /*{ // Ordenamiento por inserción.
         int * arreglo = new int[tamano];
         llenarArreglo( arreglo, tamano );
         ordenador.insercion( arreglo, tamano );
         delete[] arreglo;
-    }
+    }*/
 
+    { // Ordenamiento por mezcla.
+        int * arreglo = new int[tamano];
+        llenarArreglo( arreglo, tamano );
+
+        std::cout << "Arreglo aleatorio" << std::endl << std::endl;
+        imprimirArreglo( arreglo, tamano );
+
+        ordenador.mergesort( arreglo, tamano );
+
+        std::cout << std::endl << "Arreglo ordenado" << std::endl << std::endl;
+        imprimirArreglo( arreglo, tamano );
+
+        delete[] arreglo;
+    }
     return 0;
 }
 
