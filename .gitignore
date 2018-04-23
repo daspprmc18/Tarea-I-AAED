@@ -30,3 +30,5 @@
 *.exe
 *.out
 *.app
+/Tarea I/dist/
+/Tarea I/build/
