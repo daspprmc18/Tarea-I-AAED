@@ -36,27 +36,19 @@ private:
 
         while ( i < tamSubIzq && j < tamSubDer ) {
 
-            if ( subIzq[i] <= subDer[j] ) {
-                arreglo[m] = subIzq[i];
-                ++i;
-            } else {
-                arreglo[m] = subDer[j];
-                ++j;
-            }
-            ++m;
+            if ( subIzq[i] <= subDer[j] )
+                arreglo[m++] = subIzq[i++];
+            else
+                arreglo[m++] = subDer[j++];
         }
 
         // Aún puede haber elementos en alguno de los dos subarreglos, por ello hacemos la verificacion respectiva y copiamos los restantes.
 
-        while ( i < tamSubIzq ) { // Si la condición se cumple aún quedan elementos en el subarreglo izquierdo.
+        while ( i < tamSubIzq ) // Si la condición se cumple aún quedan elementos en el subarreglo izquierdo.
             arreglo[m++] = subIzq[i++];
-        }
 
-        if ( j < tamSubDer ) {// Si la condición se cumple aún quedan elementos en el subarreglo derecho.
-            arreglo[m] = subDer[j];
-            ++j;
-            ++m;
-        }
+        if ( j < tamSubDer )// Si la condición se cumple aún quedan elementos en el subarreglo derecho.
+            arreglo[m++] = subDer[j++];
     }
 
     void mergesort (int * arreglo, int posInicial, int posFinal) {
