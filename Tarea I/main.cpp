@@ -25,7 +25,7 @@ int main(int argc, char** argv)
 {
     srand( time( NULL ) );
 
-    int tamano = 20;
+    int tamano = 50;
     Ordenador ordenador;
 
     /*{ // Ordenamiento por selección.
