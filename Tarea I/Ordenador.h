@@ -91,8 +91,10 @@ private:
         }
     }
 
-    void monticularizar () {
+    void monticularizar (int * arreglo, int tamano) {
 
+        for ( int k = ( ( tamano - 1 ) / 2 ); k <= 0; --k ) // Corrige cimas comenzando con el último padre del árbol hasta el primero.
+            corregirCima( arreglo, k, tamano );
     }
 
     void intercambiar (int * a, int * b) {
