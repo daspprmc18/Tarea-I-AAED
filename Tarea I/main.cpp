@@ -25,15 +25,22 @@ int main(int argc, char** argv)
 {
     srand( time( NULL ) );
 
-    int tamano = 100000;
+    int tamano = 300000;
     Ordenador ordenador;
 
-    { // Ordenamiento por selección.
+    /*{ // Ordenamiento por selección.
 
-        int * arregloSeleccion = new int[tamano];
-        llenarArreglo( arregloSeleccion, tamano );
-        ordenador.seleccion( arregloSeleccion, tamano );
-        delete[] arregloSeleccion;
+        int * arreglo = new int[tamano];
+        llenarArreglo( arreglo, tamano );
+        ordenador.seleccion( arreglo, tamano );
+        delete[] arreglo;
+    }*/
+
+    { // Ordenamiento por inserción.
+        int * arreglo = new int[tamano];
+        llenarArreglo( arreglo, tamano );
+        ordenador.insercion( arreglo, tamano );
+        delete[] arreglo;
     }
 
     return 0;
@@ -52,3 +59,11 @@ void llenarArreglo(int * arreglo, int tamano)
         arreglo[i] = ( rand( ) % 201 ) - ( 100 ); // Rango de aleatorios [-100, 100]
 
 }
+
+/*
+std::cout << "Arreglo aleatorio" << std::endl << std::endl;
+imprimirArreglo( arreglo, tamano );
+
+std::cout << std::endl << "Arreglo ordenado" << std::endl << std::endl;
+imprimirArreglo( arreglo, tamano );
+ */

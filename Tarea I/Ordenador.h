@@ -31,9 +31,13 @@ public:
 
             min = i;
 
+            // Recorre el arreglo desde la i-ésima + 1 posición hasta n en busca de la posición que 
+            // contiene el menor de todos los números, una vez que lo encuentra lo intercambia con el
+            // elemento en la i-ésima posición.
+
             for ( int j = i + 1; j <= ultimaPosicion; ++j ) {
 
-                if ( arreglo[j] < arreglo[min] ) // Si el elemento en la j-ésima posición es más pequeño que el mínimo, actualice el mínimo.
+                if ( arreglo[j] < arreglo[min] ) // Si el elemento en la j-ésima posición es más pequeño que el mínimo, actualice mínimo.
                     min = j;
             }
 
@@ -45,6 +49,25 @@ public:
     };
 
     void insercion (int * arreglo, int tamano) {
+
+        int llave = 0;
+        int i = 0;
+
+        for ( int j = 1; j < tamano; ++j ) {
+
+            llave = arreglo[j];
+            i = j - 1; // Índice de elemento inmediatamente anterior a j.
+
+            // Ahora: comienza a comparar el i-ésimo elemento con la llave, si es mayor inserta 
+            // el i-ésimo elemento en la i-ésima + 1 posición y decrementa i. Realiza lo anterior
+            // hasta que el i-ésimo elemento sea menor a la llave o que i < 0.
+            while ( i >= 0 && arreglo[i] > llave ) {
+                arreglo[i + 1] = arreglo[i];
+                --i;
+            }
+
+            arreglo[i + 1] = llave;
+        }
     };
 
     void mergesort (int * arreglo, int tamano) {
