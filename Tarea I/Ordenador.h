@@ -10,6 +10,8 @@ using namespace std;
 
 class Ordenador {
 private:
+    void mergesort (int * arreglo, int posicionInicial, int posicionFinal);
+    void merge (int * arreglo, int posInicial, int posMedia, int posFinal);
 
 
 public:
@@ -71,6 +73,11 @@ public:
     };
 
     void mergesort (int * arreglo, int tamano) {
+        // En el pseudocódigo los arreglos siempre inician en 1 y terminan en n.
+        // Ahora en la máquina los arreglos inician en 0 y terminan en n-1.
+        // Ignoro si este pequeño cambio tiene implicaciones directas en las llamadas
+        // a la parte izquierda y derecha de mergesort.
+        mergesort( arreglo, 0, tamano - 1 );
     }
 
     void heapsort (int * arreglo, int tamano) {
@@ -86,3 +93,38 @@ public:
     };
 };
 #endif
+
+void mergesort (int * arreglo, int posInicial, int posFinal) {
+
+    int posMedia = 0;
+    if ( posInicial < posFinal ) {
+
+        posMedia = ( posInicial + posFinal ) / 2;
+
+        mergesort( arreglo, posInicial, posMedia );
+        mergesort( arreglo, posMedia + 1, posFinal );
+        merge( arreglo, posInicial, posMedia, posFinal ); // Mezcla A[posInicial..posMedia] y A[posMedia+1..posFinal]
+    }
+}
+
+void merge (int * arreglo, int posInicial, int posMedia, int posFinal) {
+
+    int tamSubIzq = posMedia - posInicial + 1; // La distancia entre el inicio y el punto medio, se le suma 1 porque el arreglo inicia en 0.
+    int tamSubDer = posFinal - posMedia; // La distancia entre el final y el punto medio.
+
+    int subIzq[tamSubIzq];
+    int subDer[tamSubDer];
+
+    // Copia los elementos desde A[posInicial..posMedia] en el subarreglo izquierdo.
+    for ( int i = 0; i < tamSubIzq; ++i )
+        subIzq[i] = arreglo[posInicial + i];
+
+    // Copia los elementos desde A[posMedia+1..posFinal] en el subarreglo derecho.
+    for ( int i = 0; i < tamSubDer; ++i )
+        subDer[i] = arreglo[posMedia + 1 + i]; // Dado que el arreglo está numerado de 0...n-1 hay que sumar 1 a la posicion media del arreglo completo
+    // para llegar al primer elemento del subarreglo derecho.
+
+
+
+
+}
