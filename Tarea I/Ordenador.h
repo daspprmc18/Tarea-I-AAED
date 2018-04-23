@@ -123,10 +123,6 @@ public:
     };
 
     void mergesort (int * arreglo, int tamano) {
-        // En el pseudocódigo los arreglos siempre inician en 1 y terminan en n.
-        // Ahora en la máquina los arreglos inician en 0 y terminan en n-1.
-        // Ignoro si este pequeño cambio tiene implicaciones directas en las llamadas
-        // a la parte izquierda y derecha de mergesort.
         mergesort( arreglo, 0, tamano - 1 );
     }
 
