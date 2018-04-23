@@ -64,7 +64,15 @@ private:
         }
     }
 
-    void corregirCima (int *arreglo, int i, int tamano) {
+    void monticularizar (int * arreglo, int tamano) {
+
+        int ultimoPadre = ( tamano - 1 ) / 2;
+        for ( int k = ultimoPadre; k >= 0; --k ) // Corrige cimas comenzando con el último padre del árbol hasta el primero.
+            corregirCima( arreglo, k, tamano );
+
+    }
+
+    void corregirCima (int *arreglo, int i, int tamMonticulo) {
 
         int posMaximo = 0; // Representa la posición en el arreglo del max{ A[ i, hijoIzq(i), hijoDer(i)] } ; "i" es la raíz del montículo.
         int posHijoIzq = hijoIzq( i );
@@ -73,12 +81,12 @@ private:
 
         { // En resumen: determina la posición en el arreglo del elemento mayor entre un padre y sus dos hijos.
 
-            if ( ( posHijoIzq <= tamano ) && ( arreglo[posHijoIzq] > arreglo[i] ) ) // Si la posicion del hijo izquierdo es menor que el tamaño del montículo y 
+            if ( ( posHijoIzq <= tamMonticulo ) && ( arreglo[posHijoIzq] > arreglo[i] ) ) // Si la posicion del hijo izquierdo es menor que el tamaño del montículo y 
                 // el hijo izquiero es más grande que el elemento en la raíz.
                 posMaximo = posHijoIzq;
             else posMaximo = i;
 
-            if ( ( posHijoDer <= tamano ) & ( arreglo[posHijoDer] > arreglo[posMaximo] ) ) // Si la posicion del hijo derecho es menor que el tamaño del montículo y 
+            if ( ( posHijoDer <= tamMonticulo ) & ( arreglo[posHijoDer] > arreglo[posMaximo] ) ) // Si la posicion del hijo derecho es menor que el tamaño del montículo y 
                 // el hijo derecho es más grande que el máximo.
                 posMaximo = posHijoDer;
         }
@@ -87,14 +95,8 @@ private:
             // para que cumpla las propiedades de montículo.
 
             intercambiar( &arreglo[i], &arreglo[posMaximo] );
-            corregirCima( arreglo, posMaximo );
+            corregirCima( arreglo, posMaximo, tamMonticulo );
         }
-    }
-
-    void monticularizar (int * arreglo, int tamano) {
-
-        for ( int k = ( ( tamano - 1 ) / 2 ); k <= 0; --k ) // Corrige cimas comenzando con el último padre del árbol hasta el primero.
-            corregirCima( arreglo, k, tamano );
     }
 
     void intercambiar (int * a, int * b) {
@@ -109,11 +111,11 @@ private:
     };
 
     int inline hijoIzq (int i) {
-        return 2 * i;
+        return (2 * i ) + 1;
     };
 
     int inline hijoDer (int i) {
-        return (2 * i ) + 1;
+        return (2 * i ) + 2;
     };
 
 public:
@@ -179,6 +181,7 @@ public:
     }
 
     void heapsort (int * arreglo, int tamano) {
+        monticularizar( arreglo, tamano );
     };
 
     void quicksort (int * arreglo, int tamano) {
