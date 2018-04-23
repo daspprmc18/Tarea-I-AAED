@@ -64,6 +64,56 @@ private:
         }
     }
 
+    void corregirCima (int *arreglo, int i, int tamano) {
+
+        int posMaximo = 0; // Representa la posición en el arreglo del max{ A[ i, hijoIzq(i), hijoDer(i)] } ; "i" es la raíz del montículo.
+        int posHijoIzq = hijoIzq( i );
+        int posHijoDer = hijoDer( i );
+
+
+        { // En resumen: determina la posición en el arreglo del elemento mayor entre un padre y sus dos hijos.
+
+            if ( ( posHijoIzq <= tamano ) && ( arreglo[posHijoIzq] > arreglo[i] ) ) // Si la posicion del hijo izquierdo es menor que el tamaño del montículo y 
+                // el hijo izquiero es más grande que el elemento en la raíz.
+                posMaximo = posHijoIzq;
+            else posMaximo = i;
+
+            if ( ( posHijoDer <= tamano ) & ( arreglo[posHijoDer] > arreglo[posMaximo] ) ) // Si la posicion del hijo derecho es menor que el tamaño del montículo y 
+                // el hijo derecho es más grande que el máximo.
+                posMaximo = posHijoDer;
+        }
+
+        if ( posMaximo != i ) { // Implica que el padre es menor que sus hijos, por tanto hay que realizar un intercambio y volver a manipular el montículo, p
+            // para que cumpla las propiedades de montículo.
+
+            intercambiar( &arreglo[i], &arreglo[posMaximo] );
+            corregirCima( arreglo, posMaximo );
+        }
+    }
+
+    void monticularizar () {
+
+    }
+
+    void intercambiar (int * a, int * b) {
+
+        int temp = *a; // Almacenamos en el temporal, el dato en la memoria apuntada por a.
+        *a = *b; // Almacenamos en la memoria apuntada por a, el dato almacenado en la memoria apuntada por b.
+        *b = temp; // Almacenamos en la memoria apuntada por b, el dato temporal.
+    }
+
+    int inline padre (int i) {
+        return i / 2;
+    };
+
+    int inline hijoIzq (int i) {
+        return 2 * i;
+    };
+
+    int inline hijoDer (int i) {
+        return (2 * i ) + 1;
+    };
+
 public:
 
     Ordenador () {
