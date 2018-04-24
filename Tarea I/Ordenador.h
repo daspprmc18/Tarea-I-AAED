@@ -88,7 +88,7 @@ private:
 
     }
 
-    void corregirCima (int *arreglo, int i, int tamMonticulo) {
+    void corregirCima (int * arreglo, int i, int tamMonticulo) {
 
         int posMaximo = 0; // Representa la posición en el arreglo del max{ A[ i, hijoIzq(i), hijoDer(i)] } ; "i" es la raíz del montículo.
         int posHijoIzq = hijoIzq( i );
@@ -121,6 +121,44 @@ private:
         arreglo[0] = arreglo[tamMonticulo--];
         corregirCima( arreglo, 0, tamMonticulo );
         return maximo;
+    }
+
+    // Ordenamiento rápido:
+
+    void quicksort (int * arreglo, int posInicial, int posFinal) {
+
+    }
+
+    int particion (int * arreglo, int posInicial, int posFinal) {
+
+        int pivote = arreglo[posFinal];
+        int i = posInicial;
+        int j = posFinal - 1;
+
+        while ( i < posFinal && i < j ) { // Mientras i no haya llegado al final -1 y j no se haya cruzado con i.
+
+            // Nota: Si i se detiene es porque encontró un elemento menor al pivote, de lo anterior podemos conlcuir dos ideas; que
+            // hay elementos menores al pivote antes de la i-ésima posición si y sólo si i no se detuvo en la posición que empezó.
+            // Si i no se detuvo en la primera posición en la que empezó, garantiza que habrá intercambio con el elemento en la j-ésima posición.
+            // De otra manera no habrá y j se decrementará hasta llegar a i.
+
+            // Si i no se detiene y llega hasta el final, quiere decir que los elementos estaban ordenados con respecto al pivote.
+
+            if ( arreglo[i] <= pivote ) { // Mientras el elemento en la i-ésima posición sea menor que el pivote, incrementamos i.
+                ++i;
+            } else {
+                while ( i < j && ( arreglo[j] >= pivote ) ) { // Mientras j no haya llegado al inicio (Esto en el caso de que el i se haya detenido en la primera posición.)
+                    // Y el elemento en la j-ésima posición sea mayor que el pivote, decrementamos j. La primera condición evita invadir posiciónes de memoria no válida.
+                    --j;
+                }// Se detuvo por dor razones: 1) Encontró un elemento menor al pivote. 2) j se cruzó con i.
+
+                if ( arreglo[i] >= pivote && arreglo[j] <= pivote ) { // Luego de hacer el intercambio incrementamos i y decrementamos j y repetimos el proceso.
+                    intercambiar( &arreglo[i++], &arreglo[j--] );
+                } // En caso de que j e i se cruzen simplemente se rotorna i como nuevo pivote.
+            }
+        }
+
+        return i;
     }
 
     // Otros:
@@ -207,6 +245,7 @@ public:
     };
 
     void quicksort (int * arreglo, int tamano) {
+        quicksort( arreglo, 0, tamano - 1 ); // Enviamos genuinamente la posicion final del arreglo es decir n-1.
     };
 
     void radixsort (int * arreglo, int tamano) {
