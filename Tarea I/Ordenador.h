@@ -11,6 +11,8 @@ using namespace std;
 class Ordenador {
 private:
 
+    // Ordenamiento por mezcla:
+
     void merge (int * arreglo, int posInicial, int posMedia, int posFinal) {
 
         int tamSubIzq = posMedia - posInicial + 1; // La distancia entre el inicio y el punto medio, se le suma 1 porque el arreglo inicia en 0.
@@ -64,6 +66,20 @@ private:
         }
     }
 
+    // Ordenamiento por montículos.
+
+    int inline padre (int i) { // Se calcula de esta forma el padre?
+        return i / 2;
+    };
+
+    int inline hijoIzq (int i) {
+        return (2 * i ) + 1;
+    };
+
+    int inline hijoDer (int i) {
+        return (2 * i ) + 2;
+    };
+
     void monticularizar (int * arreglo, int tamano) {
 
         int ultimoPadre = ( tamano - 1 ) / 2;
@@ -99,6 +115,16 @@ private:
         }
     }
 
+    int extraerMaximo (int * arreglo, int tamMonticulo) {
+
+        int maximo = arreglo[0];
+        arreglo[0] = arreglo[tamMonticulo--];
+        corregirCima( arreglo, 0, tamMonticulo );
+        return maximo;
+    }
+
+    // Otros:
+
     void intercambiar (int * a, int * b) {
 
         int temp = *a; // Almacenamos en el temporal, el dato en la memoria apuntada por a.
@@ -106,17 +132,6 @@ private:
         *b = temp; // Almacenamos en la memoria apuntada por b, el dato temporal.
     }
 
-    int inline padre (int i) {
-        return i / 2;
-    };
-
-    int inline hijoIzq (int i) {
-        return (2 * i ) + 1;
-    };
-
-    int inline hijoDer (int i) {
-        return (2 * i ) + 2;
-    };
 
 public:
 
@@ -181,7 +196,14 @@ public:
     }
 
     void heapsort (int * arreglo, int tamano) {
+
+        int i = tamano;
+        int tamMonticulo = tamano;
+
         monticularizar( arreglo, tamano );
+
+        while ( tamMonticulo )
+            arreglo[i--] = extraerMaximo( arreglo, tamMonticulo-- );
     };
 
     void quicksort (int * arreglo, int tamano) {
