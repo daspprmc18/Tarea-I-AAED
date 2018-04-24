@@ -127,11 +127,11 @@ private:
 
     void quicksort (int * arreglo, int posInicial, int posFinal) {
 
-        int i = 0;
+        int pivote = 0;
         if ( posFinal > posInicial ) {
-            i = particion( arreglo, posInicial, posFinal );
-            quicksort( arreglo, posInicial, i - 1 );
-            quicksort( arreglo, i + 1, posFinal );
+            pivote = particion( arreglo, posInicial, posFinal );
+            quicksort( arreglo, posInicial, pivote-1);
+            quicksort( arreglo, pivote + 1, posFinal );
         }
     }
 
@@ -141,7 +141,7 @@ private:
         int i = posInicial;
         int j = posFinal - 1;
 
-        while ( i < posFinal && i < j ) { // Mientras i no haya llegado al final -1 y j no se haya cruzado con i.
+        while ( i <= posFinal && i < j ) { // Mientras i no haya llegado al final -1 y j no se haya cruzado con i.
 
             // Nota: Si i se detiene es porque encontró un elemento menor al pivote, de lo anterior podemos conlcuir dos ideas; que
             // hay elementos menores al pivote antes de la i-ésima posición si y sólo si i no se detuvo en la posición que empezó.
@@ -159,7 +159,7 @@ private:
                 }// Se detuvo por dor razones: 1) Encontró un elemento menor al pivote. 2) j se cruzó con i.
 
                 if ( arreglo[i] >= pivote && arreglo[j] <= pivote ) { // Luego de hacer el intercambio incrementamos i y decrementamos j y repetimos el proceso.
-                    intercambiar( &arreglo[i++], &arreglo[j--] );
+                    intercambiar( &arreglo[i++], &arreglo[j] );
                 }
             }
         }
