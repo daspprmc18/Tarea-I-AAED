@@ -25,7 +25,7 @@ int main(int argc, char** argv)
 {
     srand( time( NULL ) );
 
-    int tamano = 100000;
+    int tamano = 20;
     Ordenador ordenador;
 
     /*{ // Ordenamiento por selección.
@@ -56,6 +56,22 @@ int main(int argc, char** argv)
         ordenador.heapsort( arreglo, tamano );
         delete[] arreglo;
     }*/
+
+    { // Ordenamiento por rápido.
+        int * arreglo = new int[tamano];
+        llenarArreglo( arreglo, tamano );
+
+        std::cout << "Arreglo aleatorio" << std::endl << std::endl;
+        imprimirArreglo( arreglo, tamano );
+
+        ordenador.quicksort( arreglo, tamano );
+
+        std::cout << std::endl << "Arreglo ordenado" << std::endl << std::endl;
+        imprimirArreglo( arreglo, tamano );
+
+        delete[] arreglo;
+    }
+
 
     return 0;
 }

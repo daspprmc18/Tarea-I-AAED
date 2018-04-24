@@ -127,6 +127,12 @@ private:
 
     void quicksort (int * arreglo, int posInicial, int posFinal) {
 
+        int i = 0;
+        if ( posFinal > posInicial ) {
+            i = particion( arreglo, posInicial, posFinal );
+            quicksort( arreglo, posInicial, i - 1 );
+            quicksort( arreglo, i + 1, posFinal );
+        }
     }
 
     int particion (int * arreglo, int posInicial, int posFinal) {
@@ -154,11 +160,13 @@ private:
 
                 if ( arreglo[i] >= pivote && arreglo[j] <= pivote ) { // Luego de hacer el intercambio incrementamos i y decrementamos j y repetimos el proceso.
                     intercambiar( &arreglo[i++], &arreglo[j--] );
-                } // En caso de que j e i se cruzen simplemente se rotorna i como nuevo pivote.
+                }
             }
         }
 
-        return i;
+        intercambiar( &arreglo[i], &arreglo[posFinal] ); // Intercambia i con el pivote.
+
+        return i; // Retorna el nuevo pivote.
     }
 
     // Otros:
@@ -245,7 +253,7 @@ public:
     };
 
     void quicksort (int * arreglo, int tamano) {
-        quicksort( arreglo, 0, tamano - 1 ); // Enviamos genuinamente la posicion final del arreglo es decir n-1.
+        quicksort( arreglo, 0, tamano - 1 ); // Enviamos como posicion final del arreglo: n-1.
     };
 
     void radixsort (int * arreglo, int tamano) {
